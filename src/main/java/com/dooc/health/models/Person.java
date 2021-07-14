@@ -1,5 +1,7 @@
 package com.dooc.health.models;
 
+import org.hibernate.mapping.Set;
+
 import javax.persistence.*;
 import java.util.Date;
 
