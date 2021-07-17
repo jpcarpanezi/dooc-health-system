@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 @Table(name = "MedicalConsultation", schema = "DOOC")
 public class MedicalConsultation {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idConsultation", nullable = false)
 	private int ID;
 

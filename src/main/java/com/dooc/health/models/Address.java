@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "Address", schema = "DOOC")
 public class Address {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idAddress", nullable = false)
 	private int ID;
 
