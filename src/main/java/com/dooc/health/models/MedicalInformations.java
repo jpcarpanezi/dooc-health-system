@@ -1,5 +1,7 @@
 package com.dooc.health.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,9 +23,10 @@ public class MedicalInformations {
 	@Column(name = "observations", nullable = true)
 	private String observations;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
-	@JoinColumn(name = "idperson")
+	@JoinColumn(name = "idPerson")
+	@JsonBackReference
 	private Person person;
 
 	public MedicalInformations() { }
