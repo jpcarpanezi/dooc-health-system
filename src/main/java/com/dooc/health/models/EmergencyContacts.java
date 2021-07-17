@@ -21,7 +21,7 @@ public class EmergencyContacts {
 	@Column(name = "idPerson", nullable = false)
 	private int idPerson;
 
-	@ManyToOne
+	@OneToOne
 	@MapsId
 	@JoinColumn(name = "idperson")
 	private Person person;
