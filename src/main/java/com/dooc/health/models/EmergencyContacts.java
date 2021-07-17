@@ -6,7 +6,6 @@ import javax.persistence.*;
 @Table(name = "EmergencyContacts", schema = "DOOC")
 public class EmergencyContacts {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idEmergContacts", nullable = false)
 	private int ID;
 
