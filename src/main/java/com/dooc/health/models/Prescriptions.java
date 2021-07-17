@@ -1,9 +1,6 @@
 package com.dooc.health.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Prescriptions", schema = "DOOC")
@@ -24,14 +21,29 @@ public class Prescriptions {
 	@Column(name = "dosage", nullable = false)
 	private String dosage;
 
+	@ManyToOne
+	@JoinColumn(name = "idMedicine", insertable = false, updatable = false, nullable = false)
+	private Medicines medicines;
+
+	@ManyToOne
+	@JoinColumn(name = "idConsultation", insertable = false, updatable = false, nullable = false)
+	private MedicalConsultation medicalConsultation;
+
+	@ManyToOne
+	@JoinColumn(name = "idPerson", insertable=false, updatable = false, nullable = false)
+	private Person person;
+
 	public Prescriptions() { }
 
-	public Prescriptions(int ID, int idPerson, int idConsultation, int idMedicine, String dosage) {
+	public Prescriptions(int ID, int idPerson, int idConsultation, int idMedicine, String dosage, Medicines medicines, MedicalConsultation medicalConsultation, Person person) {
 		this.ID = ID;
 		this.idPerson = idPerson;
 		this.idConsultation = idConsultation;
 		this.idMedicine = idMedicine;
 		this.dosage = dosage;
+		this.medicines = medicines;
+		this.medicalConsultation = medicalConsultation;
+		this.person = person;
 	}
 
 	public int getID() {

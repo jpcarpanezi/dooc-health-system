@@ -62,4 +62,15 @@ public class EmergencyContacts {
 	public Person getPerson() {
 		return person;
 	}
+
+	@ManyToOne
+	private Person manyToOne;
+
+	public Person getManyToOne() {
+		return manyToOne;
+	}
+
+	public void setManyToOne(Person manyToOne) {
+		this.manyToOne = manyToOne;
+	}
 }

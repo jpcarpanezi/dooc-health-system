@@ -1,9 +1,6 @@
 package com.dooc.health.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -28,15 +25,21 @@ public class MedicalConsultation {
 	@Column(name = "idPerson", nullable = false)
 	private int idPerson;
 
+	@ManyToOne
+	@MapsId
+	@JoinColumn(name = "idperson")
+	private Person person;
+
 	public MedicalConsultation() { }
 
-	public MedicalConsultation(int ID, Timestamp consultationDate, String reason, String diagnose, String observations, int idPerson) {
+	public MedicalConsultation(int ID, Timestamp consultationDate, String reason, String diagnose, String observations, int idPerson, Person person) {
 		this.ID = ID;
 		this.consultationDate = consultationDate;
 		this.reason = reason;
 		this.diagnose = diagnose;
 		this.observations = observations;
 		this.idPerson = idPerson;
+		this.person = person;
 	}
 
 	public int getID() {
@@ -63,3 +66,4 @@ public class MedicalConsultation {
 		return idPerson;
 	}
 }
+
