@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Medicines", schema = "DOOC")
 public class Medicines {
+
 	@Id
 	@Column(name = "idMedicines", nullable = false)
 	private int ID;
@@ -23,31 +24,44 @@ public class Medicines {
 
 	public Medicines() { }
 
-	public Medicines(int ID, String drugName, String activeIngredient, String formRoute, String company) {
-		this.ID = ID;
-		this.drugName = drugName;
-		this.activeIngredient = activeIngredient;
-		this.formRoute = formRoute;
-		this.company = company;
-	}
+
 
 	public int getID() {
 		return ID;
+	}
+	public void setID(int id){
+		this.ID = id;
 	}
 
 	public String getDrugName() {
 		return drugName;
 	}
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
 
 	public String getActiveIngredient() {
 		return activeIngredient;
+	}
+	public void setActiveIngredient(String activeIngredient) {
+		this.activeIngredient = activeIngredient;
 	}
 
 	public String getFormRoute() {
 		return formRoute;
 	}
-
+	public void setFormRoute(String formRoute) {
+		this.formRoute = formRoute;
+	}
 	public String getCompany() {
 		return company;
 	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+
+
+
+
 }

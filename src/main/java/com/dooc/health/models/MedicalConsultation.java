@@ -1,5 +1,7 @@
 package com.dooc.health.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -7,7 +9,7 @@ import java.sql.Timestamp;
 @Table(name = "MedicalConsultation", schema = "DOOC")
 public class MedicalConsultation {
 	@Id
-	@Column(name = "idConsultation", nullable = false)
+	@Column(name = "idConsultation")
 	private int ID;
 
 	@Column(name = "consultationDate", nullable = false)
@@ -26,8 +28,8 @@ public class MedicalConsultation {
 	private int idPerson;
 
 	@ManyToOne
-	@MapsId
-	@JoinColumn(name = "idperson")
+	@JsonBackReference
+	@JoinColumn(name = "idPerson", insertable = false, updatable = false)
 	private Person person;
 
 	public MedicalConsultation() { }
@@ -46,24 +48,56 @@ public class MedicalConsultation {
 		return ID;
 	}
 
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+
 	public Timestamp getConsultationDate() {
 		return consultationDate;
+	}
+
+	public void setConsultationDate(Timestamp consultationDate) {
+		this.consultationDate = consultationDate;
 	}
 
 	public String getReason() {
 		return reason;
 	}
 
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 	public String getDiagnose() {
 		return diagnose;
+	}
+
+	public void setDiagnose(String diagnose) {
+		this.diagnose = diagnose;
 	}
 
 	public String getObservations() {
 		return observations;
 	}
 
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}
+
 	public int getIdPerson() {
 		return idPerson;
+	}
+
+	public void setIdPerson(int idPerson) {
+		this.idPerson = idPerson;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }
 
