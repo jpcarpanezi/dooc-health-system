@@ -1,16 +1,14 @@
 package com.dooc.health.models;
 
-import org.hibernate.mapping.Set;
-
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "Person", schema = "DOOC")
 public class Person {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", nullable = false)
+	@Column(name = "id")
 	private int id;
 
 	@Column(name = "personName", nullable = false)
@@ -31,45 +29,106 @@ public class Person {
 	@Column(name = "birthCity", nullable = false)
 	private String birthCity;
 
-	public Person(int id, String personName, String cpf, String phone, Date birthDate, String email, String birthCity) {
-		this.id = id;
-		this.personName = personName;
-		this.cpf = cpf;
-		this.phone = phone;
-		this.birthDate = birthDate;
-		this.email = email;
-		this.birthCity = birthCity;
-	}
+	@OneToMany(targetEntity = Prescriptions.class, mappedBy = "person")
+	private Set<Prescriptions> prescriptions;
 
-	public Person() {
+	@OneToMany(targetEntity = MedicalConsultation.class, mappedBy = "person")
+	private Set<MedicalConsultation> medicalConsultations;
 
-	}
+	@OneToMany(targetEntity = Address.class, mappedBy = "person")
+	private Set<Address> addresses;
+
+	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private MedicalInformations medicalInformations;
+
+	public Person() { }
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getPersonName() {
 		return personName;
 	}
 
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
+
 	public String getCpf() {
 		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getPhone() {
 		return phone;
 	}
 
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public Date getBirthDate() {
 		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getBirthCity() {
 		return birthCity;
+	}
+
+	public void setBirthCity(String birthCity) {
+		this.birthCity = birthCity;
+	}
+
+	public Set<Prescriptions> getPrescriptions() {
+		return prescriptions;
+	}
+
+	public void setPrescriptions(Set<Prescriptions> prescriptions) {
+		this.prescriptions = prescriptions;
+	}
+
+	public Set<MedicalConsultation> getMedicalConsultations() {
+		return medicalConsultations;
+	}
+
+	public void setMedicalConsultations(Set<MedicalConsultation> medicalConsultations) {
+		this.medicalConsultations = medicalConsultations;
+	}
+
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public MedicalInformations getMedicalInformations() {
+		return medicalInformations;
+	}
+
+	public void setMedicalInformations(MedicalInformations medicalInformations) {
+		this.medicalInformations = medicalInformations;
 	}
 }
