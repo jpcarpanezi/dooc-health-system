@@ -33,7 +33,7 @@ public class MedicalInformationsController {
 	// GET medicalinformations?getMethod=email&value=email@example.com
 	@GetMapping
 	public @ResponseStatus ResponseEntity<MedicalInformations> getMedicalInformations(@RequestParam(defaultValue = "email") String getMethod, @RequestParam String value) throws RestClientResponseException {
-		MedicalInformations medicalInformations = null;
+		MedicalInformations medicalInformations;
 		switch (getMethod) {
 			case "email":
 				medicalInformations = medicalInformationsRepository.findMedicalInformationsByPersonEmail(value);
@@ -58,7 +58,7 @@ public class MedicalInformationsController {
 	// PUT medicalinformations?updateMethod=email&value=email@example.com
 	@PutMapping
 	public @ResponseStatus ResponseEntity<MedicalInformations> updateMedicalInformations(@RequestBody MedicalInformations medicalInformations, @RequestParam(defaultValue = "email") String updateMethod, @RequestParam String value) throws RestClientResponseException {
-		MedicalInformations medicalInformationsUpdate = null;
+		MedicalInformations medicalInformationsUpdate;
 		switch (updateMethod) {
 			case "email":
 				medicalInformationsUpdate = medicalInformationsRepository.findMedicalInformationsByPersonEmail(value);
