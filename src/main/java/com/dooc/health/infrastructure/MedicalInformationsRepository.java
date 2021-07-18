@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MedicalInformationsRepository extends CrudRepository<MedicalInformations, Integer> {
-
+	MedicalInformations findMedicalInformationsByPersonEmail(String email);
+	MedicalInformations findMedicalInformationsByPersonCpf(String cpf);
+	MedicalInformations findMedicalInformationsByPersonId(int personId);
 }

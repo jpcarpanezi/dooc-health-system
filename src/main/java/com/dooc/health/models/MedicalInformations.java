@@ -23,44 +23,58 @@ public class MedicalInformations {
 	@Column(name = "observations", nullable = true)
 	private String observations;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@MapsId
-	@JoinColumn(name = "idPerson")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "idPerson", referencedColumnName = "id")
 	@JsonBackReference
 	private Person person;
 
 	public MedicalInformations() { }
 
-	public MedicalInformations(int id, String bloodType, String medicalConditions, String allergies, String observations, Person person) {
-		this.id = id;
-		this.bloodType = bloodType;
-		this.medicalConditions = medicalConditions;
-		this.allergies = allergies;
-		this.observations = observations;
-		this.person = person;
-	}
-
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getBloodType() {
 		return bloodType;
 	}
 
+	public void setBloodType(String bloodType) {
+		this.bloodType = bloodType;
+	}
+
 	public String getMedicalConditions() {
 		return medicalConditions;
+	}
+
+	public void setMedicalConditions(String medicalConditions) {
+		this.medicalConditions = medicalConditions;
 	}
 
 	public String getAllergies() {
 		return allergies;
 	}
 
+	public void setAllergies(String allergies) {
+		this.allergies = allergies;
+	}
+
 	public String getObservations() {
 		return observations;
 	}
 
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}
+
 	public Person getPerson() {
 		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }
