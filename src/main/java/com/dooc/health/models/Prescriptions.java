@@ -24,17 +24,17 @@ public class Prescriptions {
 	private String dosage;
 
 	@OneToOne
-	@JsonBackReference
+	@JsonBackReference(value = "medicines")
 	@JoinColumn(name = "idMedicine", insertable = false, updatable = false)
 	private Medicines medicines;
 
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value = "consultation")
 	@JoinColumn(name = "idConsultation", insertable = false, updatable = false)
 	private MedicalConsultation medicalConsultation;
 
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value = "person")
 	@JoinColumn(name = "idPerson", insertable = false, updatable = false)
 	private Person person;
 
