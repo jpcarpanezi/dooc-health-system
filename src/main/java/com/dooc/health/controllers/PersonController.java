@@ -39,10 +39,10 @@ public class PersonController {
 		return new ResponseEntity<Person>(person, HttpStatus.CREATED);
 	}
 
-	// TODO: Descobrir como fazer pra paginação começar em 1 e não em 0
 	// GET person?page=1&limit=10
 	@GetMapping
 	public @ResponseStatus ResponseEntity<Map<String, Object>> getAllPeople(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int limit) {
+		// TODO: Descobrir como fazer pra paginação começar em 1 e não em 0
 		if (limit > 50) limit = 50;
 
 		Page<Person> people = personRepository.findAll(PageRequest.of(page, limit, Sort.by("personName").ascending()));
@@ -58,14 +58,21 @@ public class PersonController {
 	}
 
 	// GET person/item?selectBy=email&email=email@example.com
-	// GET person/item?selectBy=cpf&cpf=123.456.789-10
 	@GetMapping("/item")
-	public @ResponseStatus ResponseEntity<Person> getPersonByParam(@RequestParam(defaultValue = "email") String selectBy, @RequestParam(required = false) String email, @RequestParam(required = false) String cpf) throws RestClientResponseException {
-		Person person = null;
-		if(selectBy.equals("email") && email != null) {
-			person = personRepository.getPersonByEmail(email);
-		} else if(selectBy.equals("cpf") && cpf != null) {
-			person = personRepository.getPersonByCpf(cpf);
+	public @ResponseStatus ResponseEntity<Person> getPersonByParam(@RequestParam(defaultValue = "email") String selectBy, @RequestParam String value) throws RestClientResponseException {
+		Person person;
+		switch (selectBy) {
+			case "email":
+				person = personRepository.getPersonByEmail(value);
+				break;
+			case "cpf":
+				person = personRepository.getPersonByCpf(value);
+				break;
+			case "id":
+				person = personRepository.getPersonById(Integer.parseInt(value));
+				break;
+			default:
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 		if (person == null) {
@@ -75,15 +82,22 @@ public class PersonController {
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
 
-	// PUT person?updateMethod=email&email=email@example.com
-	// PUT person?updateMethod=cpf&cpf=123.456.789-10
+	// PUT person?updateMethod=email&value=email@example.com
 	@PutMapping
-	public @ResponseStatus ResponseEntity<Person> updatePerson(@RequestBody Person person, @RequestParam(defaultValue = "email") String updateMethod, @RequestParam(required = false) String email, @RequestParam(required = false) String cpf) throws RestClientResponseException {
-		Person updatePerson = null;
-		if (updateMethod.equals("email")) {
-			updatePerson = personRepository.getPersonByCpf(email);
-		} else if(updateMethod.equals("cpf")) {
-			updatePerson = personRepository.getPersonByCpf(cpf);
+	public @ResponseStatus ResponseEntity<Person> updatePerson(@RequestBody Person person, @RequestParam(defaultValue = "email") String updateMethod, @RequestParam String value) throws RestClientResponseException {
+		Person updatePerson;
+		switch (updateMethod) {
+			case "email":
+				updatePerson = personRepository.getPersonByEmail(value);
+				break;
+			case "cpf":
+				updatePerson = personRepository.getPersonByCpf(value);
+				break;
+			case "id":
+				updatePerson = personRepository.getPersonById(Integer.parseInt(value));
+				break;
+			default:
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 		if (updatePerson == null) {
@@ -104,16 +118,23 @@ public class PersonController {
 	}
 
 
-	// DELETE person?deleteMethod=email&email=email@example.com
-	// DELETE person?deleteMethod=cpf&email=123.456.789-10
+	// DELETE person?deleteMethod=email&value=email@example.com
 	@DeleteMapping
-	public @ResponseStatus ResponseEntity<HttpStatus> deletePerson(@RequestParam(defaultValue = "email") String deleteMethod, @RequestParam(required = false) String email, @RequestParam(required = false) String cpf) {
+	public @ResponseStatus ResponseEntity<HttpStatus> deletePerson(@RequestParam(defaultValue = "email") String deleteMethod, @RequestParam String value) throws RestClientResponseException {
 		// TODO: Descobrir por que o método deletePersonById() ou deletePersonByEmail() não estão funcionando.
-		Person person = null;
-		if (deleteMethod.equals("email")) {
-			person = personRepository.getPersonByEmail(email);
-		} else if (deleteMethod.equals("cpf")) {
-			person = personRepository.getPersonByCpf(cpf);
+		Person person;
+		switch (deleteMethod) {
+			case "email":
+				person = personRepository.getPersonByEmail(value);
+				break;
+			case "cpf":
+				person = personRepository.getPersonByCpf(value);
+				break;
+			case "id":
+				person = personRepository.getPersonById(Integer.parseInt(value));
+				break;
+			default:
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 		if (person == null) {

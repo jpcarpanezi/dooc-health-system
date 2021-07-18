@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface PersonRepository extends JpaRepository<Person, Integer> {
 	Person getPersonByEmail(String email);
 	Person getPersonByCpf(String cpf);
+	Person getPersonById(int id);
 }
