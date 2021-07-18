@@ -34,18 +34,26 @@ public class MedicalConsultationController {
 		return new ResponseEntity<MedicalConsultation>(consultation, HttpStatus.CREATED);
 	}
 
-	// GET /medicalconsultation/getByID
+	// GET /medicalconsultation/getByID?id=1
 	@GetMapping("/getByID")
 	public @ResponseStatus ResponseEntity<MedicalConsultation> getMedicalConsultationByID(@RequestParam int id) throws RestClientResponseException {
 		Optional<MedicalConsultation> consultation = medicalConsultationRepository.findById(id);
 
-		return new ResponseEntity<>(consultation.orElse(null), HttpStatus.OK);
+		if (consultation.isEmpty()){
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(consultation.get(), HttpStatus.OK);
 	}
 
-	// GET /medicalconsultation/getAll
+	// GET /medicalconsultation/getAll?personID=1
 	@GetMapping("/getAll")
 	public @ResponseStatus ResponseEntity<Iterable<MedicalConsultation>> getMedicalConsultation(@RequestParam int personID) throws RestClientResponseException {
 		Iterable<MedicalConsultation> consultations = medicalConsultationRepository.getMedicalConsultationByIdPerson(personID);
+
+		if (!consultations.iterator().hasNext()){
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
 
 		return new ResponseEntity<>(consultations, HttpStatus.OK);
 	}
