@@ -1,5 +1,7 @@
 package com.dooc.health.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,16 +23,19 @@ public class Prescriptions {
 	@Column(name = "dosage", nullable = false)
 	private String dosage;
 
-	@ManyToOne
-	@JoinColumn(name = "idMedicine", insertable = false, updatable = false, nullable = false)
+	@OneToOne
+	@JsonBackReference
+	@JoinColumn(name = "idMedicine", insertable = false, updatable = false)
 	private Medicines medicines;
 
 	@ManyToOne
-	@JoinColumn(name = "idConsultation", insertable = false, updatable = false, nullable = false)
+	@JsonBackReference
+	@JoinColumn(name = "idConsultation", insertable = false, updatable = false)
 	private MedicalConsultation medicalConsultation;
 
 	@ManyToOne
-	@JoinColumn(name = "idPerson", insertable=false, updatable = false, nullable = false)
+	@JsonBackReference
+	@JoinColumn(name = "idPerson", insertable = false, updatable = false)
 	private Person person;
 
 	public Prescriptions() { }
@@ -50,19 +55,63 @@ public class Prescriptions {
 		return ID;
 	}
 
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+
 	public int getIdPerson() {
 		return idPerson;
+	}
+
+	public void setIdPerson(int idPerson) {
+		this.idPerson = idPerson;
 	}
 
 	public int getIdConsultation() {
 		return idConsultation;
 	}
 
+	public void setIdConsultation(int idConsultation) {
+		this.idConsultation = idConsultation;
+	}
+
 	public int getIdMedicine() {
 		return idMedicine;
 	}
 
+	public void setIdMedicine(int idMedicine) {
+		this.idMedicine = idMedicine;
+	}
+
 	public String getDosage() {
 		return dosage;
+	}
+
+	public void setDosage(String dosage) {
+		this.dosage = dosage;
+	}
+
+	public Medicines getMedicines() {
+		return medicines;
+	}
+
+	public void setMedicines(Medicines medicines) {
+		this.medicines = medicines;
+	}
+
+	public MedicalConsultation getMedicalConsultation() {
+		return medicalConsultation;
+	}
+
+	public void setMedicalConsultation(MedicalConsultation medicalConsultation) {
+		this.medicalConsultation = medicalConsultation;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }

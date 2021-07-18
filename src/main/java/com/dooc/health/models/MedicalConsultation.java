@@ -1,9 +1,11 @@
 package com.dooc.health.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "MedicalConsultation", schema = "DOOC")
@@ -31,6 +33,9 @@ public class MedicalConsultation {
 	@JsonBackReference
 	@JoinColumn(name = "idPerson", insertable = false, updatable = false)
 	private Person person;
+
+	@OneToMany(targetEntity = Prescriptions.class, mappedBy = "medicalConsultation")
+	private Set<Prescriptions> prescriptions;
 
 	public MedicalConsultation() { }
 
@@ -98,6 +103,14 @@ public class MedicalConsultation {
 
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+
+	public Set<Prescriptions> getPrescriptions() {
+		return prescriptions;
+	}
+
+	public void setPrescriptions(Set<Prescriptions> prescriptions) {
+		this.prescriptions = prescriptions;
 	}
 }
 
