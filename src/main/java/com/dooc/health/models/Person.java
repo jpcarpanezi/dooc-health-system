@@ -1,5 +1,8 @@
 package com.dooc.health.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -37,6 +40,9 @@ public class Person {
 
 	@OneToMany(targetEntity = Address.class, mappedBy = "person")
 	private Set<Address> addresses;
+
+	@OneToMany(targetEntity = EmergencyContacts.class, mappedBy = "person")
+	private Set<EmergencyContacts> emergencyContacts;
 
 	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -122,6 +128,14 @@ public class Person {
 
 	public void setAddresses(Set<Address> addresses) {
 		this.addresses = addresses;
+	}
+
+	public Set<EmergencyContacts> getEmergencyContacts() {
+		return emergencyContacts;
+	}
+
+	public void setEmergencyContacts(Set<EmergencyContacts> emergencyContacts) {
+		this.emergencyContacts = emergencyContacts;
 	}
 
 	public MedicalInformations getMedicalInformations() {
