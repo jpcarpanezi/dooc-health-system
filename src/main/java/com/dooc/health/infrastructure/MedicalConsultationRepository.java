@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MedicalConsultationRepository extends CrudRepository<MedicalConsultation, Integer> {
+    Iterable<MedicalConsultation> getMedicalConsultationByIdPerson(int personID);
 }
