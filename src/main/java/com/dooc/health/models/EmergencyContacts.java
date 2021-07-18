@@ -1,12 +1,15 @@
 package com.dooc.health.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "EmergencyContacts", schema = "DOOC")
 public class EmergencyContacts {
 	@Id
-	@Column(name = "idEmergContacts", nullable = false)
+	@Column(name = "idEmergContacts")
 	private int ID;
 
 	@Column(name = "emergencyName", nullable = false)
@@ -21,56 +24,58 @@ public class EmergencyContacts {
 	@Column(name = "idPerson", nullable = false)
 	private int idPerson;
 
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "idperson")
+	@ManyToOne
+	@JoinColumn(name = "idPerson", insertable = false, updatable = false)
+	@JsonBackReference
 	private Person person;
 
-	public EmergencyContacts(int ID, String emergencyName, String phone, String kinship, int idPerson, Person person) {
-		this.ID = ID;
-		this.emergencyName = emergencyName;
-		this.phone = phone;
-		this.kinship = kinship;
-		this.idPerson = idPerson;
-		this.person = person;
-	}
-
-	public EmergencyContacts() {
-
-	}
+	public EmergencyContacts() { }
 
 	public int getID() {
 		return ID;
+	}
+
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 
 	public String getEmergencyName() {
 		return emergencyName;
 	}
 
+	public void setEmergencyName(String emergencyName) {
+		this.emergencyName = emergencyName;
+	}
+
 	public String getPhone() {
 		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getKinship() {
 		return kinship;
 	}
 
+	public void setKinship(String kinship) {
+		this.kinship = kinship;
+	}
+
 	public int getIdPerson() {
 		return idPerson;
 	}
 
-	public Person getPerson() {
-		return person;
+	public void setIdPerson(int idPerson) {
+		this.idPerson = idPerson;
 	}
 
-	@ManyToOne
-	private Person manyToOne;
-
-	public Person getManyToOne() {
-		return manyToOne;
-	}
-
-	public void setManyToOne(Person manyToOne) {
-		this.manyToOne = manyToOne;
-	}
+//	public Person getPerson() {
+//		return person;
+//	}
+//
+//	public void setPerson(Person person) {
+//		this.person = person;
+//	}
 }
