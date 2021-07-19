@@ -11,7 +11,7 @@ services:
     networks:
       - nginx_web
     restart: always
-    container_name: UnifnifiedHealthSystemApplicationNginx
+    container_name: UnifiedHealthSystemApplicationNginx
 
   dooc-mysql:
     image: mysql:8.0.22
