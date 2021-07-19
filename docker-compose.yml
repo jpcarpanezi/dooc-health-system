@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+  dooc-nginx:
+    image: nginx:1.18.0-alpine
+    volumes:
+      - "./src/frontend/config/default.conf:/etc/nginx/conf.d/default.conf:rw"
+      - "./src/frontend:/usr/share/nginx/html/:rw"
+    ports:
+      - "8080:80"
+    networks:
+      - nginx_web
+    restart: always
+    container_name: UnifnifiedHealthSystemApplicationNginx
+
   dooc-mysql:
     image: mysql:8.0.22
     environment:
@@ -23,12 +35,13 @@ services:
       MYSQL_DATASOURCE_USERNAME: "root"
       MYSQL_DATASOURCE_PASSWORD: "Oy9tiopah0booG5Ooyoh"
     container_name: UnifiedHealthSystemApplication
-    ports:
-      - "127.0.0.1:8080:8080"
     networks:
       - mysql
+      - nginx_web
     restart: always
 
 networks:
+  nginx_web:
+    external: false
   mysql:
     external: false
