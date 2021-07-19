@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  dooc-mysql:
+    image: mysql:8.0.22
+    environment:
+      MYSQL_ROOT_PASSWORD: "Oy9tiopah0booG5Ooyoh"
+    volumes:
+      - "./DOOC.sql:/docker-entrypoint-initdb.d:ro"
+    networks:
+      - mysql
+    ports:
+      - "127.0.0.1:3306:3306"
+    command: mysqld --sql_mode="NO_ZERO_DATE" --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    restart: always
+    container_name: UnifiedHealthSystemApplicationMySQL
+
+  dooc-java:
+    build: .
+    image: openjdk:16-alpine3.13
+    environment:
+      MYSQL_DATASOURCE_URL: "jdbc:mysql://UnifiedHealthSystemApplicationMySQL:3306/DOOC"
+      MYSQL_DATASOURCE_USERNAME: "root"
+      MYSQL_DATASOURCE_PASSWORD: "Oy9tiopah0booG5Ooyoh"
+    container_name: UnifiedHealthSystemApplication
+    ports:
+      - "127.0.0.1:8080:8080"
+    networks:
+      - mysql
+    restart: always
+
+networks:
+  mysql:
+    external: false
