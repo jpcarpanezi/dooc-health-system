@@ -47,4 +47,4 @@ spring.datasource.password=${MYSQL_DATASOURCE_PASSWORD}
 
 ## Licença 
 
-Este projeto é um trabalho de cunho acadêmico, voltado para conhecimento de estrutura de dados e sem fins lucrativos. Olhe o arquivo de LICENSE para direitos e limitações (MIT).
+Este projeto é um trabalho de cunho acadêmico, voltado para conhecimento de estrutura de dados e sem fins lucrativos. Olhe o arquivo de <a href="https://github.com/jpcarpanezi/dooc-health-system/blob/master/LICENSE" target="_blank">LICENSE</a> para direitos e limitações (MIT).
