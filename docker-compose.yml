@@ -6,7 +6,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "Oy9tiopah0booG5Ooyoh"
     volumes:
-      - "./DOOC.sql:/docker-entrypoint-initdb.d:ro"
+      - "./DOOC.sql:/docker-entrypoint-initdb.d/DOOC.sql:ro"
     networks:
       - mysql
     ports:
