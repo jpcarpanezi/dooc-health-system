@@ -19,49 +19,73 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-	<div class="px-4 py-5 my-5 text-center">
-		<img class="d-block mx-auto mb-4" src="assets/logo.png" alt="" width="72" height="72">
-		<h1 class="display-5 fw-bold mb-4">Bem-vindo(a) ao Sistema Unificado de Saúde</h1>
-	</div>
-	<div class="mx-auto row text-center justify-content-center w-75">
-		<div class="card col-md-3 mx-3">
-			<div class="card-header">
-				<h4><i class="fas fa-user me-2"></i>Pacientes</h4>
-			</div>
-			<div class="card-body text-center">
-				<div>
-					<a class="btn btn-outline-success" href="pages/new-person.html"><i class="fas fa-user-plus me-2"></i>Cadastrar paciente</a>
-				</div>
-				<div class="mt-2">
-					<a class="btn btn-outline-primary" href="pages/search-person.html"><i class="fas fa-id-card-alt me-2"></i>Consultar paciente</a>
-				</div>
-			</div>
-		</div>
-		<div class="card col-md-3 mx-3">
-			<div class="card-header">
-				<h4><i class="fas fa-prescription-bottle-alt me-2"></i>Medicamentos</h4>
-			</div>
-			<div class="card-body text-center">
-				<div>
-					<a class="btn btn-outline-success" href=""><i class="fas fa-plus-circle me-2"></i>Cadastrar medicamentos</a>
-				</div>
-				<div class="mt-2">
-					<a class="btn btn-outline-primary" href=""><i class="fas fa-pills me-2"></i>Consultar medicamentos</a>
-				</div>
-			</div>
-		</div>
-		<div class="card col-md-3 mx-3">
-			<div class="card-header">
-				<h4><i class="fas fa-stethoscope me-2"></i>Consultas</h4>
-			</div>
-			<div class="card-body text-center">
-				<div>
-					<a class="btn btn-outline-success" href=""><i class="fas fa-plus-circle me-2"></i>Cadastrar consulta</a>
-				</div>
-			</div>
-		</div>
-	</div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href="../index.html"><img width="50px" src="../assets/favicon.ico"></a>
+            <div id="navbarScroll">
+                <ul class="fs-6 text navbar-nav navbar-nav-scroll">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="pages/new-person.html">Cadastrar paciente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Consultar paciente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="pages/register-medicine.html">Cadastrar medicamento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="pages/medicines-management.html">Gerenciar medicamentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Nova consulta</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="px-4 py-5 my-5 text-center">
+            <img class="d-block mx-auto mb-4" src="assets/logo.png" alt="" width="100" height="100" draggable="false">
+            <h1 class="fw-bold mb-4">Bem-vindo(a) ao Sistema Unificado de Saúde</h1>
+            <h4><i class="fas fa-globe-americas"></i> Nacional e Virtual <i class="fas fa-globe-americas"></i></h4>
+        </div>
+        <div class="mx-auto row text-center justify-content-center w-75">
+            <div class="col-md-6">
+                <div class="card mx-3">
+                    <div class="card-header">
+                        <h4><i class="fas fa-user me-2"></i>Pacientes</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <div>
+                            <a class="btn btn-outline-success" href="pages/new-person.html"><i class="fas fa-user-plus me-2"></i>Cadastrar paciente</a>
+                        </div>
+                        <div class="mt-2">
+                            <a class="btn btn-outline-primary" href="pages/search-person.html"><i class="fas fa-stethoscope me-2"></i>Consultar paciente</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mx-3">
+                    <div class="card-header">
+                        <h4><i class="fas fa-prescription-bottle-alt me-2"></i>Medicamentos</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <div>
+                            <a class="btn btn-outline-success" href="pages/register-medicine.html"><i class="fas fa-plus-circle me-2"></i>Cadastrar medicamentos</a>
+                        </div>
+                        <div class="mt-2">
+                            <a class="btn btn-outline-primary" href="pages/medicines-management.html"><i class="fas fa-pills me-2"></i>Gerenciar medicamentos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    </div>
 </body>
 </html>
