@@ -14,13 +14,8 @@ import javax.transaction.Transactional;
 
 @Repository
 public interface MedicinesRepository extends JpaRepository<Medicines, Integer>{
-
-
-
     Medicines getMedicinesByDrugName(String drugName);
-
     Medicines getMedicinesByID(int idMedicines);
-
     Medicines getMedicinesByActiveIngredientLike(String activeIngredient);
 }
 

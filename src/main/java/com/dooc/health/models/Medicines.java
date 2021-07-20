@@ -1,11 +1,9 @@
 package com.dooc.health.models;
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "Medicines", schema = "DOOC")
 public class Medicines {
-
 	@Id
 	@Column(name = "idMedicines", nullable = false)
 	private int ID;
@@ -24,11 +22,10 @@ public class Medicines {
 
 	public Medicines() { }
 
-
-
 	public int getID() {
 		return ID;
 	}
+
 	public void setID(int id){
 		this.ID = id;
 	}
@@ -36,6 +33,7 @@ public class Medicines {
 	public String getDrugName() {
 		return drugName;
 	}
+
 	public void setDrugName(String drugName) {
 		this.drugName = drugName;
 	}
@@ -43,6 +41,7 @@ public class Medicines {
 	public String getActiveIngredient() {
 		return activeIngredient;
 	}
+
 	public void setActiveIngredient(String activeIngredient) {
 		this.activeIngredient = activeIngredient;
 	}
@@ -50,18 +49,16 @@ public class Medicines {
 	public String getFormRoute() {
 		return formRoute;
 	}
+
 	public void setFormRoute(String formRoute) {
 		this.formRoute = formRoute;
 	}
+
 	public String getCompany() {
 		return company;
 	}
+
 	public void setCompany(String company) {
 		this.company = company;
 	}
-
-
-
-
-
 }
