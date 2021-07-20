@@ -6,12 +6,12 @@ Este repositório trata-se de um trabalho de **Desenvolvimento de Software Orien
 
 ## Instalação com Docker
 
-1º) Clonar o repositório
+**1º)** Clone o repositório
 ```
 git clone https://github.com/jpcarpanezi/dooc-health-system.git
 ```
 
-2º) Executar o arquivo YAML do Docker Compose em seu terminal<br>
+**2º)** Execute o arquivo YAML do Docker Compose em seu terminal<br>
 
 **Atenção:** Caso as portas 8080 ou 3306 estejam em uso será necessário alterar as portas no arquivo YAML, ou liberar para que as requisições sejam feitas.
 
@@ -19,31 +19,7 @@ git clone https://github.com/jpcarpanezi/dooc-health-system.git
 docker-compose up -d
 ```
 
-3º) Um atalho com interface visual para as requisições de API estão disponíveis na index.html na raíz do projeto
-
-## Instalação manual
-
-1º) Clonar o repositório
-
-```
-git clone https://github.com/jpcarpanezi/dooc-health-system.git
-```
-
-2º) Rode o arquivo <a href="https://github.com/jpcarpanezi/dooc-health-system/blob/master/DOOC.sql" target="_blank">DOOC.sql</a> em seu banco de dados MySQL.
-
-3º) Alterar a <a href="https://github.com/jpcarpanezi/dooc-health-system/blob/master/src/main/resources/application.properties" target="_blank">application.properties</a> com os acessos do seu banco de dados, ou adicionar as variáveis de ambiente com os valores
-
-```
-...
-spring.datasource.url=${MYSQL_DATASOURCE_URL}
-spring.datasource.username=${MYSQL_DATASOURCE_USERNAME}
-spring.datasource.password=${MYSQL_DATASOURCE_PASSWORD}
-...
-```
-
-4º) Compilar o projeto em sua IDE Java com a versão **11.0.10**
-
-5º) Um atalho com interface visual para as requisições de API estão disponíveis na index.html na raíz do projeto
+**Extra)** Acesse localhost:8080 para visualizar um front-end de atalho para as requisições da API
 
 ## Licença 
 
