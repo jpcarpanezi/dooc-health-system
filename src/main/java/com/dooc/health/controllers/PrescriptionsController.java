@@ -63,4 +63,17 @@ public class PrescriptionsController {
 
 		return new ResponseEntity<>(prescription.get(), HttpStatus.OK);
 	}
+
+
+	// GET /prescriptions/consultation?idConsultation=1
+	@GetMapping("consultation")
+	public @ResponseStatus ResponseEntity<Iterable<Prescriptions>> getPrescriptionByConsultation(@RequestParam int idConsultation){
+		Iterable<Prescriptions> prescriptions = prescriptionsRepository.getPrescriptionsByIdConsultation(idConsultation);
+
+		if (!prescriptions.iterator().hasNext()){
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(prescriptions, HttpStatus.OK);
+	}
 }
