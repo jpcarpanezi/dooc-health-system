@@ -24,23 +24,21 @@
 		<div class="px-4 py-5 my-5 text-center">
 			<h1 class="fw-bold mb-4">Consultar paciente</h1>
 		</div>
-		<div class="container">
-			<div class="row gx-5">
-				<div class="col-md-3">
-					<label for="personSearchType">Buscar por</label>
-					<select name="personSearchType" id="personSearchType" class="form-select">
-						<option value="cpf">CPF</option>
-						<option value="email">E-mail</option>
-						<option value="id">ID</option>
-					</select>
-				</div>
-				<div class="col-md-6">
-					<label for="userInfo"></label>
-					<input type="text" name="userInfo" id="userInfo" placeholder="CPF do usuário" class="form-control" required>
-				</div>
-				<div class="col-md-3 mt-4">
-					<button id="searchPerson" class="btn btn-primary"><i class="fas fa-search me-2"></i>Buscar</button>
-				</div>
+		<div class="row justify-content-center">
+			<div class="col-md-3 mx-2">
+				<label for="personSearchType">Buscar por</label>
+				<select name="personSearchType" id="personSearchType" class="form-select">
+					<option value="cpf">CPF</option>
+					<option value="email">E-mail</option>
+					<option value="id">ID</option>
+				</select>
+			</div>
+			<div class="col-md-6 mx-2">
+				<label for="userInfo"></label>
+				<input type="text" name="userInfo" id="userInfo" placeholder="CPF do usuário" class="form-control" required>
+			</div>
+			<div class="col-md-3 mt-4 mx-2 w-auto">
+				<button id="searchPerson" class="btn btn-primary"><i class="fas fa-search me-2"></i>Buscar</button>
 			</div>
 		</div>
 		<div id="userInfoDiv" class="d-none pb-5">
@@ -109,7 +107,7 @@
 							<h5><i class="fas fa-address-book me-2"></i>Contatos de Emergência</h5>
 						</div>
 						<div class="pe-1 col-6 text-end">
-							<button class="btn btn-success"><i class="fas fa-plus me-2"></i>Adicionar contato</button>
+							<button class="btn btn-success" id="addEmergencyContactButton"><i class="fas fa-plus me-2"></i>Adicionar contato</button>
 						</div>
 					</div>
 				</div>
@@ -127,7 +125,7 @@
 							<h5><i class="fas fa-stethoscope me-2"></i>Consultas médicas</h5>
 						</div>
 						<div class="pe-1 col-6 text-end">
-							<button class="btn btn-success"><i class="fas fa-plus me-2"></i>Adicionar consulta</button>
+							<button class="btn btn-success" id="addConsultationButton"><i class="fas fa-plus me-2"></i>Adicionar consulta</button>
 						</div>
 					</div>
 				</div>
@@ -192,17 +190,17 @@
 					<form id="editMedicalInfo">
 						<div class="form-group">
 							<label for="bloodType">Tipo Sanguíneo</label>
-								<select name="bloodType" id="bloodType" class="form-select" required>
-									<option value="">Selecione um item</option>
-									<option value="O-">O-</option>
-									<option value="O+">O+</option>
-									<option value="A-">A-</option>
-									<option value="A+">A+</option>
-									<option value="B-">B-</option>
-									<option value="B+">B+</option>
-									<option value="AB-">AB-</option>
-									<option value="AB+">AB+</option>
-								</select>
+							<select name="bloodType" id="bloodType" class="form-select" required>
+								<option value="">Selecione um item</option>
+								<option value="O-">O-</option>
+								<option value="O+">O+</option>
+								<option value="A-">A-</option>
+								<option value="A+">A+</option>
+								<option value="B-">B-</option>
+								<option value="B+">B+</option>
+								<option value="AB-">AB-</option>
+								<option value="AB+">AB+</option>
+							</select>
 						</div>
 						<div class="form-group mt-3">
 							<label for="medicalConditions">Condições médicas</label>
@@ -210,7 +208,7 @@
 						</div>
 						<div class="form-group mt-3">
 							<label for="allergies">Alergias</label>
-							<input type="text" class="form-control" id="allergies" name="allergies" placeholder="Alergias">
+							<input type="text" class="form-control" id="allergies" name="allergies">
 						</div>
 						<div class="form-group mt-3">
 							<label for="observations">Observações</label>
@@ -235,12 +233,143 @@
 				</div>
 				<div class="modal-body">
 					<form id="addAddress">
-						
+						<div class="form-group">
+							<label for="zipCode">CEP</label>
+							<input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Insira o CEP" maxlength="20" required>
+						</div>
+						<div class="form-group mt-3">
+							<label for="street">Logradouro</label>
+							<input type="text" class="form-control" id="street" name="street" placeholder="Insira o Logradouro" maxlength="255" required>
+						</div>
+						<div class="form-group mt-3">
+							<label for="complement">Complemento <span class="text-muted">(Opcional)</span></label>
+							<input type="text" class="form-control" id="complement" name="complement" placeholder="Insira o Complemento" maxlength="255">
+						</div>
+						<div class="form-group mt-3">
+							<label for="city">Cidade</label>
+							<input type="text" class="form-control" id="city" name="city" placeholder="Insira a Cidade" maxlength="100">
+						</div>
+						<div class="form-group mt-3">
+							<label for="uf">Estado</label>
+							<select name="uf" id="uf" class="form-select">
+								<option value="">Selecione</option>
+								<option value="AC">Acre</option>
+								<option value="AL">Alagoas</option>
+								<option value="AM">Amazonas</option>
+								<option value="AP">Amapá</option>
+								<option value="BA">Bahia</option>
+								<option value="CE">Ceará</option>
+								<option value="DF">Distrito Federal</option>
+								<option value="ES">Espírito Santo</option>
+								<option value="GO">Goiás</option>
+								<option value="MA">Maranhão</option>
+								<option value="MG">Minas Gerais</option>
+								<option value="MS">Mato Grosso do Sul</option>
+								<option value="MT">Mato Grosso</option>
+								<option value="PA">Pará</option>
+								<option value="PB">Paraíba</option>
+								<option value="PE">Pernambuco</option>
+								<option value="PI">Piauí</option>
+								<option value="PR">Paraná</option>
+								<option value="RJ">Rio de Janeiro</option>
+								<option value="RN">Rio Grande do Norte</option>
+								<option value="RO">Rondônia</option>
+								<option value="RR">Roraima</option>
+								<option value="RS">Rio Grande do Sul</option>
+								<option value="SC">Santa Catarina</option>
+								<option value="SE">Sergipe</option>
+								<option value="SP">São Paulo</option>
+								<option value="TO">Tocantins</option>
+							</select>
+						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 					<button type="submit" form="addAddress" class="btn btn-primary">Salvar alterações</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" tabindex="-1" id="addEmergencyContactModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Adicionar contato</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="addEmergencyContact">
+						<div class="form-group">
+							<label for="emergencyContactName">Nome</label>
+							<input class="form-control" type="text" name="emergencyContactName" id="emergencyContactName" placeholder="Insira o nome" maxlength="255" required>
+						</div>
+						<div class="form-group mt-3">
+							<label for="kinship">Parentesco</label>
+							<input class="form-control" type="text" name="kinship" id="kinship" maxlength="255" placeholder="Insira o parentesco" required>
+						</div>
+						<div class="form-group mt-3">
+							<label for="phone">Telefone</label>
+							<input class="form-control" type="tel" name="phone" id="phone" maxlength="16" placeholder="Insira o telefone" required>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+					<button type="submit" form="addEmergencyContact" class="btn btn-primary">Salvar alterações</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" tabindex="-1" id="addConsultationModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Adicionar contato</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="addConsultation">
+						<div class="form-group">
+							<label for="consultationDate">Data da consulta</label>
+							<input class="form-control" type="datetime-local" name="consultationDate" id="consultationDate" required>
+						</div>
+						<div class="form-group mt-3">
+							<label for="diagnose">Diagnóstico</label>
+							<textarea class="form-control" name="diagnose" id="diagnose" rows="3" required></textarea>
+						</div>
+						<div class="form-group mt-3">
+							<label for="reason">Motivo</label>
+							<textarea class="form-control" name="reason" id="reason" rows="3" required></textarea>
+						</div>
+						<div class="form-group mt-3">
+							<label for="observations">Observações</label>
+							<textarea class="form-control" name="observations" id="observations" rows="3" required></textarea>
+						</div>
+						<hr class="my-4">
+						Prescrições
+						<div class="form-group">
+							<label for="medicines">Medicamento</label>
+							<select class="form-select" name="medicines" id="medicines">
+								<option value="">Selecione</option>
+							</select>
+						</div>
+						<div class="form-group mt-3">
+							<label for="dosage">Dosagem</label>
+							<input type="text" id="dosage" name="dosage" class="form-control" placeholder="Insira a dosagem" maxlength="64">
+						</div>
+						<button type="button" id="addPrescription" class="btn btn-success mt-3"><i class="fas fa-plus me-2"></i>Adicionar prescrição</button>
+						<hr class="my-4 d-none" id="prescriptionsHr">
+						<div id="prescriptionsDiv">
+
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+					<button type="submit" form="addConsultation" class="btn btn-primary">Salvar alterações</button>
 				</div>
 			</div>
 		</div>
