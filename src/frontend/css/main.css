@@ -12,3 +12,11 @@
 	padding-right: 0!important;
 	padding-left: 0!important;
 }
+
+input, select, button {
+	box-shadow: none!important;
+}
+
+.card-bold .card-body > div {
+	font-weight: 700!important;
+}
