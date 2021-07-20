@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="language" content="pt-br">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if IE]><link rel="shortcut icon" href="../assets/favicon.ico"><![endif]-->
+    <link rel="icon" href="../assets/favicon.ico">
+
+    <title>Unified Health System</title>
+
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid px-5">
+        <a class="navbar-brand" href="../index.html"><img width="50px" src="../assets/favicon.ico"></a>
+        <div id="navbarScroll">
+            <ul class="fs-6 text navbar-nav navbar-nav-scroll">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="new-person.html">Cadastrar paciente</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Consultar paciente</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="register-medicine.html">Cadastrar medicamento</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Buscar medicamento</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Nova consulta</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container u-form verticalCenter">
+    <form class="card nm-form" id="formNewMedicine">
+        <div class="card-header">
+            <h4 class="font-weight-bold pt-2"><i class="fas fa-pills mr-2"></i> Cadastro de medicamento</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-group mx-2 my-4">
+                <label for="drugName">Nome do remédio</label>
+                <input type="text" class="form-control" id="drugName" name="drugName" placeholder="Insira o nome do medicamento" maxlength="255" required>
+            </div>
+            <div class="form-group mx-2 my-4">
+                <label for="activeIngredient">Princípio Ativo</label>
+                <input type="text" class="form-control" id="activeIngredient" name="activeIngredient" placeholder="Princípio ativo do remédio" maxlength="120" required>
+            </div>
+            <div class="form-group mx-2 my-4">
+                <label for="formRoute">Forma de ingestão</label>
+                <input type="text" class="form-control" id="formRoute" name="formRoute" placeholder="Exemplo: oral, nasal, etc" maxlength="14" required>
+            </div>
+            <div class="form-group mx-2 my-4">
+                <label for="company">Empresa fabricante</label>
+                <input type="text" maxlength="255" class="form-control" id="company" name="company" placeholder="Insira a empresa fabricante do remédio" required>
+            </div>
+            <div class="text-end">
+                <button formnovalidate type="submit" class="btn btn-outline-success mt-3"><i class="fas fa-user-plus me-2"></i>Cadastrar</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="../js/scripts.js"></script>
+<script type="text/javascript" src="../js/new-person.js"></script>
+<script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
