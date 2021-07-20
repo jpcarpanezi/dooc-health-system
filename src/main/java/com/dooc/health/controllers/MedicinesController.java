@@ -49,14 +49,9 @@ public class MedicinesController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/medicamento")
-	public @ResponseStatus ResponseEntity<Medicines> getMedicineByParam(@RequestParam(defaultValue = "drugName") String selectBy, @RequestParam(required = false) String drugName, @RequestParam(required = false) String activeIngredient) throws RestClientResponseException {
-		Medicines medicines = null;
-		if(selectBy.equals("drugName") && drugName != null) {
-			medicines = medicinesRepository.getMedicinesByDrugName(drugName);
-		} else if(selectBy.equals("activeIngredient") && activeIngredient!= null) {
-			medicines = medicinesRepository.getMedicinesByActiveIngredientLike('%'+activeIngredient+'%');
-		}
+	@GetMapping("/item")
+	public @ResponseStatus ResponseEntity<Medicines> getMedicineByParam(@RequestParam int id) throws RestClientResponseException {
+		Medicines medicines = medicinesRepository.getMedicinesByID(id);
 
 		if (medicines == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -66,13 +61,8 @@ public class MedicinesController {
 	}
 
 	@PutMapping
-	public @ResponseStatus ResponseEntity<Medicines> updateMedicines(@RequestBody Medicines medicines, @RequestParam(defaultValue = "drugName") String updateMethod, @RequestParam(required = false) String drugName, @RequestParam(required = false) String activeIngredient) throws RestClientResponseException {
-		Medicines updateMedicines = null;
-		if (updateMethod.equals("drugName")) {
-			updateMedicines = medicinesRepository.getMedicinesByDrugName(drugName);
-		} else if(updateMethod.equals("activeIngredient")) {
-			updateMedicines = medicinesRepository.getMedicinesByActiveIngredientLike(activeIngredient);
-		}
+	public @ResponseStatus ResponseEntity<Medicines> updateMedicines(@RequestBody Medicines medicines, @RequestParam int id) throws RestClientResponseException {
+		Medicines updateMedicines = medicinesRepository.getMedicinesByID(id);
 
 		if (updateMedicines == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
