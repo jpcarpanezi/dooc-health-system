@@ -11,9 +11,10 @@
 	<!--[if IE]><link rel="shortcut icon" href="../assets/favicon.ico"><![endif]-->
 	<link rel="icon" href="../assets/favicon.ico">
 	
-	<title>Unified Health System</title>
+	<title>Cadastrar paciente - Unified Health System</title>
 	
 	<link rel="stylesheet" href="../css/main.css">
+	<link rel="stylesheet" href="../css/sweetalert2.min.css">
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
 </head>
@@ -21,7 +22,7 @@
 <body class="d-flex flex-column min-vh-100">
 	<div class="mx-auto u-form justify-content-center">
 		<div class="px-4 py-5 my-5 text-center">
-			<h1 class="fw-bold mb-4">Cadastro de usuário</h1>
+			<h1 class="fw-bold mb-4">Cadastrar paciente</h1>
 		</div>
 		<form class="u-form" id="newUser">
 			<div class="form-group">
@@ -48,11 +49,13 @@
 				<label for="birthCity">Cidade de Nascimento</label>
 				<input type="text" class="form-control" id="birthCity" name="birthCity" placeholder="Insira a cidade de nascimento" maxlength="40" required>
 			</div>
-			<button formnovalidate type="submit" class="btn btn-outline-success mt-3"><i class="fas fa-user-plus me-2"></i>Cadastrar usuário</button>
+			<button type="submit" class="btn btn-outline-success mt-3"><i class="fas fa-user-plus me-2"></i>Cadastrar usuário</button>
 		</form>
 	</div>
-	<script type="text/javascript" src="../js/scripts.js"></script>
-	<script type="text/javascript" src="../js/new-person.js"></script>
+
+	<script type="text/javascript" src="../js/cleave.min.js"></script>
+	<script type="text/javascript" src="../js/sweetalert2.all.min.js"></script>
 	<script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="../js/pages/new-person.js"></script>
 </body>
 </html>
