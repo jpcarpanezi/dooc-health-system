@@ -7,6 +7,8 @@ var hasMedicalInfo;
 var editUserInfoModal = new bootstrap.Modal('#editUserInfoModal');
 var editMedicalInfoModal = new bootstrap.Modal('#editMedicalInfoModal');
 var addAddressModal = new bootstrap.Modal('#addAddressModal');
+var addEmergencyContactModal = new bootstrap.Modal('#addEmergencyContactModal');
+var addConsultationModal = new bootstrap.Modal('#addConsultationModal');
 
 function addCpfMask(){
 	cpfMask = new Cleave('#userInfo', {
@@ -15,6 +17,12 @@ function addCpfMask(){
 		"delimiters": [".", ".", "-"]
 	});
 }
+
+new Cleave('#zipCode', {
+	"numericOnly": true,
+	"blocks": [5, 3],
+	"delimiters": ["-"]
+});
 
 document.querySelector('#personSearchType').addEventListener('change', function(){
 	var input = document.querySelector('#userInfo');
@@ -59,7 +67,7 @@ function searchPerson(searchBy, value){
 	fetch('/services/person/item?selectBy=' + searchBy + '&value=' + value).then((result) => {
 		switch(result.status){
 			case 200:
-				result.json().then((info) => {
+				result.json().then(async (info) => {
 					personID = info.id;
 
 					var userInfo = document.querySelector('#userInfoDiv');
@@ -82,7 +90,7 @@ function searchPerson(searchBy, value){
 
 						for(let i = 0; i < info.addresses.length; i++){
 							let address = info.addresses[i];
-							body.innerHTML += `${address.street}${address.complement == null ? "" : " " + address.complement}<br>${address.city} - ${address.state} - ${address.zipCode}`;
+							body.innerHTML += `<div class="row px-3"><div class="col-6 text-start">${address.street}${address.complement == null ? "" : " (" + address.complement + ")"}<br>${address.zipCode}<br>${address.city} - ${address.state}</div><div class="col-6 text-end my-auto"><button onclick="deleteAddress(${address.id})" class="btn btn-danger"><i class="fas fa-trash-alt me-2"></i>Remover</button></div></div>`;
 
 							if (i + 1 != info.addresses.length){
 								body.innerHTML += '<hr>';
@@ -119,7 +127,7 @@ function searchPerson(searchBy, value){
 
 						for(let i = 0; i < info.emergencyContacts.length; i++){
 							let emergencyContact = info.emergencyContacts[i];
-							body.innerHTML += `Nome: ${emergencyContact.emergencyName}<br>Parentesco: ${emergencyContact.kinship}<br>Telefone: ${emergencyContact.phone}`;
+							body.innerHTML += `<div class="row px-3"><div class="col-6 text-start">Nome: ${emergencyContact.emergencyName}<br>Parentesco: ${emergencyContact.kinship}<br>Telefone: ${emergencyContact.phone}</div><div class="col-6 text-end my-auto"><button onclick="deleteContact(${emergencyContact.id})" class="btn btn-danger"><i class="fas fa-trash-alt me-2"></i>Remover</button></div></div>`;
 
 							if (i + 1 != info.emergencyContacts.length){
 								body.innerHTML += '<hr>';
@@ -143,20 +151,26 @@ function searchPerson(searchBy, value){
 
 							body.innerHTML += `Data da consulta: ${date.toLocaleDateString()} ${date.toLocaleTimeString()}<br>Diagnóstico: ${consultation.diagnose}<br>Observações: ${consultation.observations}<br>Motivo: ${consultation.reason}`;
 
-							if(consultation.prescriptions.length != 0){
-								let html = `<div class="card mt-3"><div class="card-header"><h5><i class="fas fa-pills me-2"></i> Prescrições</h5></div><div class="card-body card-bold">`;
+							try {
+								var prescriptionsResponse = await fetch('/services/prescriptions/consultation?idConsultation=' + consultation.id);
 
-								for(let j = 0; j < consultation.prescriptions.length; j++){
-									let prescription = consultation.prescriptions[j];
-									html += `${prescription.dosage}`;
-		
-									if (j + 1 != consultation.prescriptions.length){
-										html += '<hr>';
+								if(prescriptionsResponse.status == 200){
+									var prescriptions = await prescriptionsResponse.json();
+									let html = `<div class="card mt-3"><div class="card-header"><h5><i class="fas fa-pills me-2"></i> Prescrições</h5></div><div class="card-body card-bold">`;
+	
+									for(let j = 0; j < prescriptions.length; j++){
+										let prescription = prescriptions[j];
+										html += `${prescription.medicines.drugName} - ${prescription.medicines.activeIngredient} - ${prescription.medicines.company}<br>${prescription.dosage}`;
+	
+										if (j + 1 != prescriptions.length){
+											html += '<hr>';
+										}
 									}
+	
+									html += '</div></div>';
+									body.innerHTML += html;
 								}
-
-								html += '</div></div>';
-								body.innerHTML += html;
+							} catch {
 							}
 
 							if (i + 1 != info.medicalConsultations.length){
@@ -183,9 +197,6 @@ function formatDate(date){
 	var split = date.split('-');
 	return split[2] + "/" + split[1] + "/" + split[0];
 }
-
-document.querySelector('#userInfo').value = "581.057.170-00";
-document.querySelector('#searchPerson').click();
 
 document.querySelector('#editUserInfoButton').addEventListener('click', function(){
 	fetch('/services/person/item?selectBy=id&value=' + personID).then((result) => {
@@ -358,4 +369,292 @@ document.querySelector('#editMedicalInfo').addEventListener('submit', function(e
 
 document.querySelector('#addAddressButton').addEventListener('click', function(){
 	addAddressModal.show();
+});
+
+document.querySelector('#addAddress').addEventListener('submit', function(e){
+	e.preventDefault();
+	var form = this;
+
+	var obj = {
+		zipCode: form.querySelector('#zipCode').value,
+		street: form.querySelector('#street').value,
+		complement: form.querySelector('#complement').value == "" ? null : form.querySelector('#complement').value,
+		city: form.querySelector('#city').value,
+		state: form.querySelector('#uf').value,
+		idPerson: personID
+	};
+
+	var fetchObj = {
+		method: 'POST',
+		headers: new Headers({
+			"Content-Type": "application/json",
+		}),
+		body: JSON.stringify(obj)
+	};
+
+	fetch('/services/address', fetchObj).then((result) => {
+		if (result.status != 201){
+			Swal.fire('Erro', 'Não foi possível adicionar o endereço', 'error');
+			return;
+		}
+
+		Swal.fire({
+			title: 'Endereço adicionado',
+			icon: 'success',
+			toast: true,
+			position: 'bottom-end',
+			showConfirmButton: false,
+			timer: 2500,
+			timerProgressBar: true
+		});
+		addAddressModal.hide();
+
+		searchPerson('id', personID);
+	}).catch((error) => {
+		Swal.fire('Erro', 'Não foi possível adicionar o endereço', 'error');
+	});
+});
+
+function deleteAddress(id){
+	var fetchObj = {
+		method: 'DELETE',
+		headers: new Headers({
+			"Content-Type": "application/json",
+		})
+	};
+
+	fetch('/services/address?idAddress=' + id, fetchObj).then((result) => {
+		if (result.status != 202){
+			Swal.fire('Erro', 'Não foi possível remover o endereço', 'error');
+			return;
+		}
+
+		Swal.fire({
+			title: 'Endereço removido',
+			icon: 'success',
+			toast: true,
+			position: 'bottom-end',
+			showConfirmButton: false,
+			timer: 2500,
+			timerProgressBar: true
+		});
+
+		searchPerson('id', personID);
+	}).catch((error) => {
+		Swal.fire('Erro', 'Não foi possível remover o endereço', 'error');
+	});
+}
+
+document.querySelector('#addEmergencyContactButton').addEventListener('click', function(){
+	addEmergencyContactModal.show();
+});
+
+document.querySelector('#addAddressButton').addEventListener('click', function(){
+	addAddressModal.show();
+});
+
+document.querySelector('#addEmergencyContact').addEventListener('submit', function(e){
+	e.preventDefault();
+	var form = this;
+
+	var obj = {
+		emergencyName: form.querySelector('#emergencyContactName').value,
+		phone: form.querySelector('#phone').value,
+		kinship: form.querySelector('#kinship').value,
+		idPerson: personID
+	};
+
+	var fetchObj = {
+		method: 'POST',
+		headers: new Headers({
+			"Content-Type": "application/json",
+		}),
+		body: JSON.stringify(obj)
+	};
+
+	fetch('/services/emergencycontacts', fetchObj).then((result) => {
+		if (result.status != 201){
+			Swal.fire('Erro', 'Não foi possível adicionar o contato', 'error');
+			return;
+		}
+
+		Swal.fire({
+			title: 'Contato adicionado',
+			icon: 'success',
+			toast: true,
+			position: 'bottom-end',
+			showConfirmButton: false,
+			timer: 2500,
+			timerProgressBar: true
+		});
+		addEmergencyContactModal.hide();
+
+		searchPerson('id', personID);
+	}).catch((error) => {
+		Swal.fire('Erro', 'Não foi possível adicionar o contato', 'error');
+	});
+});
+
+function deleteContact(id){
+	var fetchObj = {
+		method: 'DELETE',
+		headers: new Headers({
+			"Content-Type": "application/json",
+		})
+	};
+
+	fetch('/services/emergencycontacts?id=' + id, fetchObj).then((result) => {
+		if (result.status != 202){
+			Swal.fire('Erro', 'Não foi possível remover o contato', 'error');
+			return;
+		}
+
+		Swal.fire({
+			title: 'Contato removido',
+			icon: 'success',
+			toast: true,
+			position: 'bottom-end',
+			showConfirmButton: false,
+			timer: 2500,
+			timerProgressBar: true
+		});
+
+		searchPerson('id', personID);
+	}).catch((error) => {
+		Swal.fire('Erro', 'Não foi possível remover o contato', 'error');
+	});
+}
+
+var prescriptionsArr = [];
+document.querySelector('#addConsultationButton').addEventListener('click', function(){
+	fetch('/services/medicines?limit=500000').then((result) => {
+		if (result.status != 200){
+			Swal.fire('Erro', 'Não foi possível adicionar uma consulta', 'error');
+			return;
+		}
+
+		result.json().then((info) => {
+			addConsultationModal.show();
+
+			document.querySelector('#prescriptionsDiv').innerHTML = "";
+			prescriptionsArr = [];
+			document.querySelector('#prescriptionsHr').classList.add('d-none');
+
+			var select = document.querySelector('#addConsultation').querySelector('#medicines');
+			
+			for(let i = 0; i < info.medicines.content.length; i++){
+				var medicine = info.medicines.content[i];
+
+				select.insertAdjacentHTML('beforeend', `<option value="${medicine.id}">${medicine.activeIngredient} - ${medicine.drugName}</option>`);
+			}
+		});
+	})
+});
+
+document.querySelector('#addPrescription').addEventListener('click', function(){
+	var medicine = document.querySelector('#medicines').value;
+	var dosage = document.querySelector('#dosage').value;
+
+	if(medicine == "" || dosage == ""){
+		Swal.fire('Erro', 'Selecione o medicamento e insira a dosagem', 'error');
+		return;
+	}
+
+	prescriptionsArr.push({medicineID: medicine, dosage: dosage});
+
+	var div = document.querySelector('#prescriptionsDiv');
+
+	if(div.innerHTML != ""){
+		div.innerHTML += "<hr>";
+	}else{
+		document.querySelector('#prescriptionsHr').classList.remove('d-none');
+	}
+
+	div.innerHTML += `<div>${document.querySelector('#medicines').selectedOptions[0].innerHTML}<br>${dosage}</div>`;
+});
+
+document.querySelector('#dosage').addEventListener('keypress', function(e){
+	if(e.key == "Enter"){
+		e.preventDefault();
+		document.querySelector('#addPrescription').click();
+	}
+})
+
+document.querySelector('#addConsultation').addEventListener('submit', function(e){
+	e.preventDefault();
+	var form = this;
+
+	var obj = {
+		consultationDate: form.querySelector('#consultationDate').value,
+		diagnose: form.querySelector('#diagnose').value,
+		reason: form.querySelector('#reason').value,
+		observations: form.querySelector('#observations').value,
+		idPerson: personID
+	};
+
+	var fetchObj = {
+		method: 'POST',
+		headers: new Headers({
+			"Content-Type": "application/json",
+		}),
+		body: JSON.stringify(obj)
+	};
+
+	fetch('/services/medicalconsultation', fetchObj).then(async (result) => {
+		if (result.status != 201){
+			Swal.fire('Erro', 'Não foi possível adicionar a consulta', 'error');
+			return;
+		}
+
+		if(prescriptionsArr.length > 0){
+			var consultations = await (await fetch('/services/medicalconsultation/getAll?personID=' + personID)).json();
+			var consultationID = Math.max.apply(Math, consultations.map(function(o) { return o.id; }));
+
+			var success = true;
+			for(let i = 0; i < prescriptionsArr.length; i++){
+				obj = {
+					idPerson: personID,
+					idConsultation: consultationID,
+					idMedicine: prescriptionsArr[i].medicineID,
+					dosage: prescriptionsArr[i].dosage
+				};
+				fetchObj = {
+					method: 'POST',
+					headers: new Headers({
+						"Content-Type": "application/json",
+					}),
+					body: JSON.stringify(obj)
+				};
+
+				var result = await fetch('/services/prescriptions', fetchObj);
+				if(result.status != 201){
+					success = false;
+				}
+			}
+
+			if(!success){
+				Swal.fire('Erro', 'A consulta foi adicionada com sucesso, mas ocorreu um erro ao adicionar uma ou mais prescrições', 'error');
+				addConsultationModal.hide();
+				document.querySelector('#addConsultation').reset();
+				searchPerson('id', personID);
+				return;
+			}
+		}
+
+		Swal.fire({
+			title: 'Consulta adicionada',
+			icon: 'success',
+			toast: true,
+			position: 'bottom-end',
+			showConfirmButton: false,
+			timer: 2500,
+			timerProgressBar: true
+		});
+		addConsultationModal.hide();
+		document.querySelector('#addConsultation').reset();
+
+		searchPerson('id', personID);
+	}).catch((error) => {
+		Swal.fire('Erro', 'Não foi possível adicionar a consulta', 'error');
+	});
 });

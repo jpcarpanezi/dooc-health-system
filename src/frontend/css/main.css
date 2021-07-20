@@ -13,12 +13,8 @@
 	padding-left: 0!important;
 }
 
-input, select, button {
+input, select, button, textarea {
 	box-shadow: none!important;
-}
-
-.card-bold .card-body > div {
-	font-weight: 700!important;
 }
 
 .verticalCenter {
