@@ -1,6 +1,7 @@
 package com.dooc.health.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -24,17 +25,14 @@ public class Prescriptions {
 	private String dosage;
 
 	@OneToOne
-	@JsonBackReference(value = "medicines")
 	@JoinColumn(name = "idMedicine", insertable = false, updatable = false)
 	private Medicines medicines;
 
 	@ManyToOne
-	@JsonBackReference(value = "consultation")
 	@JoinColumn(name = "idConsultation", insertable = false, updatable = false)
 	private MedicalConsultation medicalConsultation;
 
 	@ManyToOne
-	@JsonBackReference(value = "person")
 	@JoinColumn(name = "idPerson", insertable = false, updatable = false)
 	private Person person;
 

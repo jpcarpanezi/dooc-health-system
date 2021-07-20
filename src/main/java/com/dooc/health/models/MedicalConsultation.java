@@ -35,6 +35,7 @@ public class MedicalConsultation {
 	private Person person;
 
 	@OneToMany(targetEntity = Prescriptions.class, mappedBy = "medicalConsultation")
+	@JsonBackReference("medical")
 	private Set<Prescriptions> prescriptions;
 
 	public MedicalConsultation() { }

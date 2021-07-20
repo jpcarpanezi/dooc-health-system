@@ -1,5 +1,6 @@
 package com.dooc.health.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -33,6 +34,7 @@ public class Person {
 	private String birthCity;
 
 	@OneToMany(targetEntity = Prescriptions.class, mappedBy = "person")
+	@JsonBackReference("person")
 	private Set<Prescriptions> prescriptions;
 
 	@OneToMany(targetEntity = MedicalConsultation.class, mappedBy = "person")
